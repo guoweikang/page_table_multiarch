@@ -23,6 +23,8 @@ impl PagingMetaData for A64PagingMetaData {
 
     #[inline]
     fn flush_tlb(vaddr: Option<VirtAddr>) {
+        // make sure all previous page table writes are visible
+        asm!("dsb ishst");
         unsafe {
             if let Some(vaddr) = vaddr {
                 // TLB Invalidate by VA, All ASID, EL1, Inner Shareable
