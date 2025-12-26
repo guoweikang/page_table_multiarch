@@ -30,7 +30,7 @@ impl PagingMetaData for A64PagingMetaData {
                 asm!("tlbi vaae1is, {}; dsb sy; isb", in(reg) ((vaddr.as_usize() >> 12) & VA_MASK))
             } else {
                 // TLB Invalidate by VMID, All at stage 1, EL1
-                asm!("tlbi vmalle1; dsb sy; isb")
+                asm!("tlbi vmalle1is; dsb sy; isb")
             }
         }
     }
